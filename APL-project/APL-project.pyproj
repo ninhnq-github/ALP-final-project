@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>33b9a500-8d5d-4a63-8db1-4c88cbbf28cf</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>APL_project.py</StartupFile>
+    <StartupFile>model_train.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,13 +21,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="APL_project.py" />
+    <Compile Include="DigitClassification.py" />
+    <Compile Include="model_train.py" />
     <Compile Include="models.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Image\" />
+    <Folder Include="Image_R\" />
+    <Folder Include="TEST\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Image\1.jpg" />
@@ -42,6 +45,42 @@
     <Content Include="Image\7.jpg" />
     <Content Include="Image\8.jpg" />
     <Content Include="Image\9.jpg" />
+    <Content Include="Image_R\1.jpg" />
+    <Content Include="TEST\IMG1.jpg" />
+    <Content Include="TEST\IMG10.jpg" />
+    <Content Include="TEST\IMG11.jpg" />
+    <Content Include="TEST\IMG12.jpg" />
+    <Content Include="TEST\IMG13.jpg" />
+    <Content Include="TEST\IMG14.jpg" />
+    <Content Include="TEST\IMG15.jpg" />
+    <Content Include="TEST\IMG16.jpg" />
+    <Content Include="TEST\IMG17.jpg" />
+    <Content Include="TEST\IMG18.jpg" />
+    <Content Include="TEST\IMG19.jpg" />
+    <Content Include="TEST\IMG2.jpg" />
+    <Content Include="TEST\IMG20.jpg" />
+    <Content Include="TEST\IMG21.jpg" />
+    <Content Include="TEST\IMG22.jpg" />
+    <Content Include="TEST\IMG23.jpg" />
+    <Content Include="TEST\IMG24.jpg" />
+    <Content Include="TEST\IMG25.jpg" />
+    <Content Include="TEST\IMG26.jpg" />
+    <Content Include="TEST\IMG27.jpg" />
+    <Content Include="TEST\IMG28.jpg" />
+    <Content Include="TEST\IMG29.jpg" />
+    <Content Include="TEST\IMG3.jpg" />
+    <Content Include="TEST\IMG30.jpg" />
+    <Content Include="TEST\IMG31.jpg" />
+    <Content Include="TEST\IMG32.jpg" />
+    <Content Include="TEST\IMG33.jpg" />
+    <Content Include="TEST\IMG34.jpg" />
+    <Content Include="TEST\IMG35.jpg" />
+    <Content Include="TEST\IMG4.jpg" />
+    <Content Include="TEST\IMG5.jpg" />
+    <Content Include="TEST\IMG6.jpg" />
+    <Content Include="TEST\IMG7.jpg" />
+    <Content Include="TEST\IMG8.jpg" />
+    <Content Include="TEST\IMG9.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

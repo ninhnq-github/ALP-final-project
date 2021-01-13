@@ -11,9 +11,11 @@ import cv2;
 def Classify(model, img):
     test = np.array([img])
     test  = torch.from_numpy(test)
+    model.requires_grad = False
     output = model(test.unsqueeze(0).cuda())
     _, predicted = torch.max(output, 1)
     digit = int(predicted[0])
+    model.requires_grad = True
     return digit
 
 def PreProcess(img):
@@ -64,21 +66,15 @@ def CropRect(img):
     h, w = img.shape[:2]
     img = cv2.resize(img,(1000,int(1000/w*h)),interpolation = cv2.INTER_AREA)
     h, w = img.shape[:2]
-    kernel = np.ones((1,1),np.uint8)
-
-    e = cv2.erode(img,kernel,iterations = 2)  
-    d = cv2.dilate(e,kernel,iterations = 1)
-    ret, th = cv2.threshold(d, 150, 255, cv2.THRESH_BINARY_INV)
-
-    mask = np.zeros((h+2, w+2), np.uint8)
-    cv2.floodFill(th, mask, (200,200), 255); # position = (200,200)
-    out = cv2.bitwise_not(th)
-    out = cv2.dilate(out,kernel,iterations = 3)
     
-    #cv2.imshow("image",out)
+    #gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(img, (1, 1), 0)
+    thresh = cv2.threshold(blurred, 0, 255,cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
     
-    cnt, h = cv2.findContours(out.copy(),cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-   
+    #cv2.imshow("image",thresh)
+    cv2.waitKey(0)
+
+    cnt, h = cv2.findContours(thresh.copy(),cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     areas = [cv2.contourArea(c) for c in cnt]
     max_index = np.argmax(areas)
     areas[max_index] = 0
@@ -87,12 +83,12 @@ def CropRect(img):
 
     x,y,w,h = cv2.boundingRect(cnt_biggest)
     crop= img[ y:h+y,x:w+x]
-    
+ 
     named = "Image_R/1.jpg"
-    print(named)
+    #print(named)
     cv2.imwrite(named, crop)
-    
-    cv2.imshow("snip",crop )
+    #cv2.imshow("snip",crop )
+
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
@@ -100,14 +96,15 @@ def CropImg(img):
     h, w = img.shape[:2]
     img = cv2.resize(img,(400,int(400/w*h)),interpolation = cv2.INTER_AREA)
     h, w = img.shape[:2]
+    
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (1, 1), 0)
-    thresh = cv2.threshold(blurred, 100, 255,cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-    cv2.imshow("image",thresh)
+    thresh = cv2.threshold(blurred, 150, 255,cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    #cv2.imshow("image",thresh)
+    
     cnt, h = cv2.findContours(thresh.copy(),cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     sd = ShapeDetector()
     
-
     def get_contour_precedence(contour, rows):
         origin = cv2.boundingRect(contour)
         return origin[1] + origin[0]*rows
@@ -118,15 +115,15 @@ def CropImg(img):
     for i in range(len(cnt)):
         area = cv2.contourArea(cnt[i])
         #print(area)
-        if(area>500 and area<1000):
-            print(shapeDetection(cnt[i], sd, img, ratio=1))
+        if(area>500 and area<1000 and shapeDetection(cnt[i], sd, img, ratio=1)=='square'):
+            #print(shapeDetection(cnt[i], sd, img, ratio=1))
             countRightContour+=1
             mask = np.zeros_like(img)
             x,y,w,h = cv2.boundingRect(cnt[i])
             crop= img[ y:h+y,x:w+x]
             named = "Image\\" + str(countRightContour)+ ".jpg"
             cv2.imwrite(named, crop)
-            cv2.imshow("snip",crop )
+            #cv2.imshow("snip",crop )
             if(cv2.waitKey(0))==27:break
         if (countRightContour==12): break
 
@@ -135,7 +132,7 @@ def CropImg(img):
 NAME_MODEL = 'model_final.pt'
 
 def ScanfImg(name):
-    img = cv2.imread(name, 0);
+    img = cv2.imread(name,0);
     CropRect(img)
     rect = cv2.imread("Image_R\\1.jpg");
     CropImg(rect)
@@ -146,9 +143,14 @@ def ScanfImg(name):
     return studentID, point
 
 
-imgname = 'TEST/IMG1.jpg'
-ScanfImg(imgname)
+for i in range(4):
+    imgname = 'TEST/IMG'+str(i+1)+'.jpg'
+    print(imgname)
+    ScanfImg(imgname)
 
+#imgname = 'TEST/IMG1.jpg'
+#    print(imgname)
+#ScanfImg(imgname)
 
 #file = open('TestResult.csv','a')
 #for i in range(33):

@@ -5,6 +5,13 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "APL-project", "APL-project\APL-project.pyproj", "{33B9A500-8D5D-4A63-8DB1-4C88CBBF28CF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8D2BCC3C-3789-4E07-92F7-BF4CF19C2D0D}"
+	ProjectSection(SolutionItems) = preProject
+		APL-project\model_final.pt = APL-project\model_final.pt
+		APL-project\ShapeDetectors.py = APL-project\ShapeDetectors.py
+		APL-project\TestResult.csv = APL-project\TestResult.csv
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -26,6 +26,7 @@
     <Compile Include="models.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ShapeDetectors - Copy.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Image\" />
@@ -46,6 +47,9 @@
     <Content Include="Image\8.jpg" />
     <Content Include="Image\9.jpg" />
     <Content Include="Image_R\1.jpg" />
+    <Content Include="model_final - Copy.pt" />
+    <Content Include="Test00.csv" />
+    <Content Include="TestResult - Copy.csv" />
     <Content Include="TEST\IMG1.jpg" />
     <Content Include="TEST\IMG10.jpg" />
     <Content Include="TEST\IMG11.jpg" />

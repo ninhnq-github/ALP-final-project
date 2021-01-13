@@ -19,12 +19,15 @@ def Classify(model, img):
     return digit
 
 def PreProcess(img):
-    img = cv2.GaussianBlur(img,(5,5),0)
-    img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    img = cv2.GaussianBlur(img,(1,1),0)
+    #img = cv2.threshold(img, 240, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    img = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV,11,2)
     img = img.astype('float32')
     img /= 255.0
-    img = cv2.resize(img,(30,30),interpolation = cv2.INTER_AREA)
-    img = img[1:29,1:29]
+    img = cv2.resize(img,(32,32),interpolation = cv2.INTER_AREA)
+    img = img[2:30,2:30]
+    #plt.imshow(img,cmap='binary')
+    #plt.show()
     return img
 
 def ScanInfo(model):
@@ -68,8 +71,9 @@ def CropRect(img):
     h, w = img.shape[:2]
     
     #gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    blurred = cv2.GaussianBlur(img, (1, 1), 0)
-    thresh = cv2.threshold(blurred, 0, 255,cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    blurred = cv2.GaussianBlur(img, (5, 5), 0)
+    edged = cv2.Canny(blurred, 75, 200)
+    thresh = cv2.threshold(edged, 150, 255,cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
     
     #cv2.imshow("image",thresh)
     cv2.waitKey(0)
@@ -96,10 +100,12 @@ def CropImg(img):
     h, w = img.shape[:2]
     img = cv2.resize(img,(400,int(400/w*h)),interpolation = cv2.INTER_AREA)
     h, w = img.shape[:2]
-    
+    img = img[10:391,10:391]
+
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (1, 1), 0)
-    thresh = cv2.threshold(blurred, 150, 255,cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    #edged = cv2.Canny(blurred, 0, 255)
+    thresh =  cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV,11,2)
     #cv2.imshow("image",thresh)
     
     cnt, h = cv2.findContours(thresh.copy(),cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -115,7 +121,8 @@ def CropImg(img):
     for i in range(len(cnt)):
         area = cv2.contourArea(cnt[i])
         #print(area)
-        if(area>500 and area<1000 and shapeDetection(cnt[i], sd, img, ratio=1)=='square'):
+        if(area>550 and area<1000 and shapeDetection(cnt[i], sd, img, ratio=1)=='square'):
+            #print(area)
             #print(shapeDetection(cnt[i], sd, img, ratio=1))
             countRightContour+=1
             mask = np.zeros_like(img)
@@ -126,7 +133,7 @@ def CropImg(img):
             #cv2.imshow("snip",crop )
             if(cv2.waitKey(0))==27:break
         if (countRightContour==12): break
-
+    print('Number of right digit: %d'%(countRightContour))
     cv2.destroyAllWindows()
 
 NAME_MODEL = 'model_final.pt'
@@ -143,19 +150,52 @@ def ScanfImg(name):
     return studentID, point
 
 
-for i in range(4):
-    imgname = 'TEST/IMG'+str(i+1)+'.jpg'
-    print(imgname)
-    ScanfImg(imgname)
+from os import walk
+import os
 
-#imgname = 'TEST/IMG1.jpg'
-#    print(imgname)
-#ScanfImg(imgname)
+def LoadTestFolder(path):
+    f = []
+    for (dirpath, dirnames, filenames) in walk(path):
+        f.extend(filenames)
+        break
+    return f
 
-#file = open('TestResult.csv','a')
-#for i in range(33):
+def FormatTestFolder(path):
+    for count, filename in enumerate(os.listdir(path)): 
+        dst ="IMG" + str(count).zfill(5) + ".jpg"
+        src = path+ filename 
+        dst = path + dst 
+        os.rename(src, dst) 
+
+def Validate(TestName, TestPath):
+    #FormatTestFolder(TestPath)
+    testFile = LoadTestFolder(TestPath)
+    testFile.sort()
+    TestNum = len(testFile)
+    print("------------------Start to validate program accuracy!------------------")
+    print("TEST NAME: " + TestName)
+    print("TEST NUM : " + str(TestNum))
+    file = open(TestName+'.csv','w')
+    file.write('ID, studentID, point, valid, rstudentID, rpoint, crop, class\n')
+    for i in range(TestNum):
+        imgname = TestPath + testFile[i]
+        print(imgname)
+        studentID, point = ScanfImg(imgname)
+        file.write('%d, %d, %f\n'%(i+1,studentID, point))
+        print('In Test %d: studentID = %d, point = %f'%(i+1,studentID,point))
+    file.close()
+    print('------------------------------------------------------------------------')
+    print('Tester: ALL TEST CASE has been completed!')
+    print('Tester: See your result in: %s.csv'%(TestName))
+
+
+#for i in range(4):
 #    imgname = 'TEST/IMG'+str(i+1)+'.jpg'
 #    print(imgname)
-#    studentID, point = ScanfImg(imgname)
-#    file.write('%d, %d, %f\n'%(i+1,studentID, point))
-#file.close()
+#    ScanfImg(imgname)
+
+#FormatTestFolder('D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST01\\')
+#testfile = LoadTestFolder('D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST01\\')
+#print(testfile)
+
+Validate('TEST01','D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST01\\')

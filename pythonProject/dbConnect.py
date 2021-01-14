@@ -1,5 +1,5 @@
 import pymysql.cursors
-
+import csv
 
 def getConnect():
     hname = 'localhost'
@@ -113,17 +113,72 @@ def deleteStudent(mssv):
         conn.close()
 
 
-# -----------------------------------------------------
+def import_csv_to_mysql(filename):
+    '''
+     Truyền vào tên file csv cần nhập vào dữ liệu vào mysql
+    :param filename:
+    :return: bool
+    '''
+    file = open(filename, 'r')
+    conection = getConnect()
+    cursor = conection.cursor()
+
+    csv_data = csv.reader(file)
+
+    try:
+        for row in csv_data:
+            cursor.executemany("INSERT INTO student(MSSV, fullname, subjects, scores ) VALUES('%s', '%s', '%s', '%s')", row)
+
+        conection.commit()
+        return True
+    except:
+        conection.rollback()
+        return False
+
+    finally:
+        conection.close()
+
+def insertStudent(mssv, name, subject, score):
+    '''
+        Thêm thông tin học viên
+    :param mssv:
+    :param name:
+    :param subject:
+    :param score:
+    :return: bool
+    '''
+    conn = getConnect()
+
+    query = "INSERT INTO student(MSSV, fullname, subject,scores) VALUES ('%s', '%s', '%s', '%s')" % (''.join(mssv),
+                                                                                                    ''.join(name),
+                                                                                                    ''.join(subject),
+                                                                                                    ''.join(score))
+    cursor = conn.cursor()
+    try:
+        # thực thi query và truyền tham số vào
+        cursor.execute(query)
+
+        conn.commit();
+        if cursor.rowcount > 0:
+            return True
+        else:
+            return False
+    except:
+        conn.rollback()
+        return False
+    finally:
+        conn.close()
+
+#-----------------------------------------------------
 # deleteStudent('18110005')
-# getStudent()
+
 # t= insertScore('18110005', '9')
 # print('Insert: ', t)
 #
 # k = updateStudent('18110004','Trịnh Mơ','PRE', '7')
 # print('Update: ', t)
 
+#table = getStudent()
 
-tb = getStudent()
-#
-for x in tb:
-    print(x)
+#for row in table:
+#    print(row)

@@ -2,11 +2,10 @@ import torch
 import matplotlib.pyplot as plt
 import numpy as np
 import torchvision
-
 from torch import nn, optim
 from torchvision import datasets, transforms
-
 import cv2;
+from CNNModels import CNNModel
 
 def Classify(model, img):
     test = np.array([img])
@@ -136,7 +135,7 @@ def CropImg(img):
     print('Number of right digit: %d'%(countRightContour))
     cv2.destroyAllWindows()
 
-NAME_MODEL = 'model_final.pt'
+NAME_MODEL = 'model_new_final_1.pt'
 
 def ScanfImg(name):
     img = cv2.imread(name,0);
@@ -182,7 +181,7 @@ def Validate(TestName, TestPath):
         print(imgname)
         studentID, point = ScanfImg(imgname)
         file.write('%d, %d, %f\n'%(i+1,studentID, point))
-        print('In Test %d: studentID = %d, point = %f'%(i+1,studentID,point))
+        print('In Test %d: studentID = %d, point = %.2f'%(i+1,studentID,point))
     file.close()
     print('------------------------------------------------------------------------')
     print('Tester: ALL TEST CASE has been completed!')

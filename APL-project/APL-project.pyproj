@@ -21,16 +21,23 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CNNModels.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DigitClassification.py" />
     <Compile Include="model_train.py" />
     <Compile Include="models.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ShapeDetectors - Copy.py" />
+    <Compile Include="Train_Model_new.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Image\" />
     <Folder Include="Image_R\" />
+    <Folder Include="TEST01\" />
     <Folder Include="TEST\" />
   </ItemGroup>
   <ItemGroup>
@@ -48,7 +55,49 @@
     <Content Include="Image\9.jpg" />
     <Content Include="Image_R\1.jpg" />
     <Content Include="model_final - Copy.pt" />
+    <Content Include="model_new_final.pt" />
+    <Content Include="model_new_final_1.pt" />
+    <Content Include="test.csv" />
     <Content Include="Test00.csv" />
+    <Content Include="TEST01.csv" />
+    <Content Include="TEST01\IMG_20210113_224023.jpg" />
+    <Content Include="TEST01\IMG_20210113_224028.jpg" />
+    <Content Include="TEST01\IMG_20210113_224036.jpg" />
+    <Content Include="TEST01\IMG_20210113_224040.jpg" />
+    <Content Include="TEST01\IMG_20210113_224049.jpg" />
+    <Content Include="TEST01\IMG_20210113_224053.jpg" />
+    <Content Include="TEST01\IMG_20210113_224100.jpg" />
+    <Content Include="TEST01\IMG_20210113_224105.jpg" />
+    <Content Include="TEST01\IMG_20210113_224113.jpg" />
+    <Content Include="TEST01\IMG_20210113_224117.jpg" />
+    <Content Include="TEST01\IMG_20210113_224124.jpg" />
+    <Content Include="TEST01\IMG_20210113_224128.jpg" />
+    <Content Include="TEST01\IMG_20210113_224134.jpg" />
+    <Content Include="TEST01\IMG_20210113_224137.jpg" />
+    <Content Include="TEST01\IMG_20210113_224145.jpg" />
+    <Content Include="TEST01\IMG_20210113_224148.jpg" />
+    <Content Include="TEST01\IMG_20210113_224155.jpg" />
+    <Content Include="TEST01\IMG_20210113_224159.jpg" />
+    <Content Include="TEST01\IMG_20210113_224207.jpg" />
+    <Content Include="TEST01\IMG_20210113_224212.jpg" />
+    <Content Include="TEST01\IMG_20210113_224218.jpg" />
+    <Content Include="TEST01\IMG_20210113_224223.jpg" />
+    <Content Include="TEST01\IMG_20210113_224228.jpg" />
+    <Content Include="TEST01\IMG_20210113_224231.jpg" />
+    <Content Include="TEST01\IMG_20210113_224236.jpg" />
+    <Content Include="TEST01\IMG_20210113_224240.jpg" />
+    <Content Include="TEST01\IMG_20210113_224244.jpg" />
+    <Content Include="TEST01\IMG_20210113_224248.jpg" />
+    <Content Include="TEST01\IMG_20210113_224256.jpg" />
+    <Content Include="TEST01\IMG_20210113_224303.jpg" />
+    <Content Include="TEST01\IMG_20210113_224308.jpg" />
+    <Content Include="TEST01\IMG_20210113_224311.jpg" />
+    <Content Include="TEST01\IMG_20210113_224315.jpg" />
+    <Content Include="TEST01\IMG_20210113_224319.jpg" />
+    <Content Include="TEST01\IMG_20210113_224325.jpg" />
+    <Content Include="TEST01\IMG_20210113_224328.jpg" />
+    <Content Include="TEST01\IMG_20210113_224335.jpg" />
+    <Content Include="TEST01\IMG_20210113_224338.jpg" />
     <Content Include="TestResult - Copy.csv" />
     <Content Include="TEST\IMG1.jpg" />
     <Content Include="TEST\IMG10.jpg" />
@@ -85,6 +134,7 @@
     <Content Include="TEST\IMG7.jpg" />
     <Content Include="TEST\IMG8.jpg" />
     <Content Include="TEST\IMG9.jpg" />
+    <Content Include="train.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

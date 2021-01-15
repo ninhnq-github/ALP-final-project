@@ -161,13 +161,13 @@ def LoadTestFolder(path):
 
 def FormatTestFolder(path):
     for count, filename in enumerate(os.listdir(path)): 
-        dst ="IMG" + str(count).zfill(5) + ".jpg"
+        dst ="TESTIMG" + str(count).zfill(5) + ".jpg"
         src = path+ filename 
         dst = path + dst 
         os.rename(src, dst) 
 
 def Validate(TestName, TestPath):
-    #FormatTestFolder(TestPath)
+    FormatTestFolder(TestPath)
     testFile = LoadTestFolder(TestPath)
     testFile.sort()
     TestNum = len(testFile)
@@ -175,12 +175,12 @@ def Validate(TestName, TestPath):
     print("TEST NAME: " + TestName)
     print("TEST NUM : " + str(TestNum))
     file = open(TestName+'.csv','w')
-    file.write('ID, studentID, point, valid, rstudentID, rpoint, crop, class\n')
+    file.write('ID, IMG, studentID, point, valid, rstudentID, rpoint, crop, class\n')
     for i in range(TestNum):
         imgname = TestPath + testFile[i]
         print(imgname)
         studentID, point = ScanfImg(imgname)
-        file.write('%d, %d, %f\n'%(i+1,studentID, point))
+        file.write('%d,%s,%d,%f\n'%(i+1,testFile[i],studentID, point))
         print('In Test %d: studentID = %d, point = %.2f'%(i+1,studentID,point))
     file.close()
     print('------------------------------------------------------------------------')

@@ -32,14 +32,20 @@ def score_btn_click():
     label1.image = test
     label1.place(x=50, y=100)
 
-    mssv_lb = Label(score_frm, text='MSSS', font=('Arial', 14))
+    mssv_lb = Label(score_frm, text='MSSS: ', font=('Arial', 14))
     mssv_lb.place(x=500, y=100)
 
-    score_lb = Label(score_frm, text='Điểm', font=('Arial', 14))
-    score_lb.place(x=500, y=150)
+    name_lb = Label(score_frm, text='Họ tên: ', font=('Arial', 14))
+    name_lb.place(x=500, y=150)
+
+    score_lb = Label(score_frm, text='Điểm: ', font=('Arial', 14))
+    score_lb.place(x=500, y=200)
+
+    scan_btn = Button(score_frm, text='Quét', font=("Consolas", 10, 'bold'), bg='orange', fg='white')
+    scan_btn.place(x=50, y=60)
 
     save_btn = Button(score_frm, text='Lưu điểm', font=("Consolas", 10, 'bold'), bg='orange', fg='white')
-    save_btn.place(x=500, y=200)
+    save_btn.place(x=500, y=250)
 
 
 # Label

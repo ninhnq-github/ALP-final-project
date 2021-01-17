@@ -29,6 +29,9 @@
     <Compile Include="models.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="dbConnect.py" />
+    <Compile Include="export.py" />
+    <Compile Include="main.py" />
     <Compile Include="ShapeDetectors - Copy.py" />
     <Compile Include="Train_Model_new.py">
       <SubType>Code</SubType>
@@ -37,6 +40,8 @@
   <ItemGroup>
     <Folder Include="Image\" />
     <Folder Include="Image_R\" />
+    <Folder Include="pythonProject\" />
+    <Folder Include="pythonProject\__pycache__\" />
     <Folder Include="TEST01\" />
     <Folder Include="TEST\" />
   </ItemGroup>
@@ -57,6 +62,9 @@
     <Content Include="model_final - Copy.pt" />
     <Content Include="model_new_final.pt" />
     <Content Include="model_new_final_1.pt" />
+    <Content Include="meow.jpg" />
+    <Content Include="pythonProject\__pycache__\dbConnect.cpython-38.pyc" />
+    <Content Include="pythonProject\__pycache__\export.cpython-38.pyc" />
     <Content Include="test.csv" />
     <Content Include="Test00.csv" />
     <Content Include="TEST01.csv" />

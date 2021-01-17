@@ -197,4 +197,4 @@ def Validate(TestName, TestPath):
 #testfile = LoadTestFolder('D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST01\\')
 #print(testfile)
 
-Validate('TEST01','D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST01\\')
+#Validate('TEST02','D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST02\\')

@@ -116,27 +116,16 @@ def deleteStudent(mssv):
 def import_csv_to_mysql(filename):
     '''
      Truyền vào tên file csv cần nhập vào dữ liệu vào mysql
-    :param filename:
-    :return: bool
+    :param filename: cùng thư mục chứa project
     '''
     file = open(filename, 'r')
-    conection = getConnect()
-    cursor = conection.cursor()
-
     csv_data = csv.reader(file)
 
-    try:
-        for row in csv_data:
-            cursor.executemany("INSERT INTO student(MSSV, fullname, subjects, scores ) VALUES('%s', '%s', '%s', '%s')", row)
+    for row in csv_data:
+        insertStudent(row[0], row[1], row[2], row[3])
 
-        conection.commit()
-        return True
-    except:
-        conection.rollback()
-        return False
-
-    finally:
-        conection.close()
+    print('Import Successfull...')
+            
 
 def insertStudent(mssv, name, subject, score):
     '''
@@ -168,6 +157,22 @@ def insertStudent(mssv, name, subject, score):
         return False
     finally:
         conn.close()
+        
+        
+def delAllStudent():
+    connect = getConnect()
+
+    query = "DELETE FROM student"
+    cursor = connect.cursor()
+    try:
+        cursor.execute(query)
+        connect.commit()
+        return True
+    except:
+        connect.rollback()
+        return False
+    finally:
+        connect.close()
 
 #-----------------------------------------------------
 # deleteStudent('18110005')

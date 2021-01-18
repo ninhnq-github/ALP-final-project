@@ -7,6 +7,24 @@ from torchvision import datasets, transforms
 import cv2;
 from CNNModels import CNNModel
 
+NUMBER_OF_DIGITS = 12
+NAME_MODEL = 'model_new_final_1.pt'
+
+# first to use -- > import all required lib and module above 
+
+# USE GUIDE 1: model validate 
+# To test model accuracy
+# Call Validate('Name of TEST', 'Path to Test image folder')
+# -- > see result stored in csv file  
+#Ex: Validate('TEST02','D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST02\\')
+
+# USE GUIDE 2: Scanf StudentID and Point from Image 
+# call func ScanfImg('direct path to image')
+# -- > return studentID, point
+# Ex: studentID, point = ScanfImg('D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST02\\TESTIMG00001.jpg')
+# print(studentID, point)
+
+
 def Classify(model, img):
     test = np.array([img])
     test  = torch.from_numpy(test)
@@ -134,20 +152,20 @@ def CropImg(img):
         if (countRightContour==12): break
     print('Number of right digit: %d'%(countRightContour))
     cv2.destroyAllWindows()
-
-NAME_MODEL = 'model_new_final_1.pt'
+    return countRightContour == NUMBER_OF_DIGITS
 
 def ScanfImg(name):
     img = cv2.imread(name,0);
     CropRect(img)
     rect = cv2.imread("Image_R\\1.jpg");
-    CropImg(rect)
+    OK = CropImg(rect)
+    if (OK == False):
+        return -1, 0, 'Scanf image has failed! Correct the innput image and try again!' 
     model =  torch.load(NAME_MODEL)
     model.eval()
     studentID = ScanInfo(model)
     point = ScanfPoint(model)
-    return studentID, point
-
+    return studentID, point, 'StudentID and point have been scaned sucessfully!'
 
 from os import walk
 import os
@@ -188,6 +206,32 @@ def Validate(TestName, TestPath):
     print('Tester: See your result in: %s.csv'%(TestName))
 
 
+# prepare model 
+def testModelLoad():
+    try: 
+        studentID, point, message = ScanfImg ('TestModel.jpg')
+    except: 
+        print('Testing model has failed, ...')
+        print('Checking for model state dict name: model_final.pt')
+        NAME_MODEL = 'model_new_final.pt'
+        try:
+            studentID, point, message = ScanfImg ('TestModel.jpg')
+        except:
+            print('Model loading failed!')
+            return False
+    finally:
+        print(message)
+        if (studentID == 14330113 and  point == 2.51):
+            print('Model successfully loaded!')
+            return True
+        else:
+            print('Warning: Model loading successful but it may work not correctly!')
+            return True
+
+testModelLoad()
+
+
+#---------------------------------------DEMO AND NOTE-------------------------------------------
 #for i in range(4):
 #    imgname = 'TEST/IMG'+str(i+1)+'.jpg'
 #    print(imgname)
@@ -197,4 +241,3 @@ def Validate(TestName, TestPath):
 #testfile = LoadTestFolder('D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST01\\')
 #print(testfile)
 
-#Validate('TEST02','D:\\CODE\\PYTHON\\ALP-final-project\\APL-project\\TEST02\\')

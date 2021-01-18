@@ -21,10 +21,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AndoidCameraConnect.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="APL_project.py" />
     <Compile Include="CNNModels.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DigitClassification.py" />
+    <Compile Include="ExcelModule.py" />
     <Compile Include="model_train.py" />
     <Compile Include="models.py">
       <SubType>Code</SubType>
@@ -33,6 +38,7 @@
     <Compile Include="export.py" />
     <Compile Include="main.py" />
     <Compile Include="ShapeDetectors - Copy.py" />
+    <Compile Include="ShapeDetectors.py" />
     <Compile Include="Train_Model_new.py">
       <SubType>Code</SubType>
     </Compile>
@@ -46,6 +52,9 @@
     <Folder Include="TEST\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="201LLCT120205_05.xlsx" />
+    <Content Include="201LLCT150105_05.xlsx" />
+    <Content Include="DIEM201LLCT120205_05.xlsx" />
     <Content Include="Image\1.jpg" />
     <Content Include="Image\10.jpg" />
     <Content Include="Image\11.jpg" />
@@ -59,7 +68,7 @@
     <Content Include="Image\8.jpg" />
     <Content Include="Image\9.jpg" />
     <Content Include="Image_R\1.jpg" />
-    <Content Include="model_final - Copy.pt" />
+    <Content Include="model_final.pt" />
     <Content Include="model_new_final.pt" />
     <Content Include="model_new_final_1.pt" />
     <Content Include="meow.jpg" />
@@ -106,6 +115,7 @@
     <Content Include="TEST01\IMG_20210113_224328.jpg" />
     <Content Include="TEST01\IMG_20210113_224335.jpg" />
     <Content Include="TEST01\IMG_20210113_224338.jpg" />
+    <Content Include="TestModel.jpg" />
     <Content Include="TestResult - Copy.csv" />
     <Content Include="TEST\IMG1.jpg" />
     <Content Include="TEST\IMG10.jpg" />
